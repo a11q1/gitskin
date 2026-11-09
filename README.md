@@ -2,7 +2,7 @@
 
 Des cartes SVG pour un profil GitHub, générées depuis l'API GitHub publique et servies depuis mon homelab.
 
-Pas de SaaS, pas de workflow, pas de dépendance : un fichier Node.js, trois endpoints, un thème « plan d'ingénieur ».
+Pas de SaaS, pas de workflow, pas de dépendance : un fichier Node.js, cinq endpoints, un thème « plan d'ingénieur ».
 
 <p align="center">
   <img src="https://skin.aq0a11q1.com/api/hero?username=a11q1&theme=blueprint" width="100%" alt="Aperçu de la carte hero" />
