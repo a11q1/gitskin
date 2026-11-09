@@ -1,0 +1,27 @@
+{
+  "username": "a11q1",
+  "name": "Sacha Fromont",
+  "role": "Systèmes & réseaux · Cybersécurité · Automatisation",
+  "location": "Paris / Île-de-France",
+  "status": "BTS SIO SISR · 2025–2027",
+  "tags": ["BTS SIO SISR", "SITECREATOR.SHOP", "PROXMOX", "PFSENSE", "TAILSCALE"],
+  "highlights": ["~30 LXC/VM", "5 SITES JO 2024", "0 INTERRUPTION", "24/7"],
+  "panel": [
+    { "key": "PVE", "value": "Proxmox VE 9.x", "status": "~30 GUESTS" },
+    { "key": "NET", "value": "pfSense · VLAN · DMZ", "status": "DENY BY DEFAULT" },
+    { "key": "VPN", "value": "Tailscale mesh", "status": "ADMIN ONLY" },
+    { "key": "EDGE", "value": "Cloudflare tunnels", "status": "WAF · ACCESS" }
+  ],
+  "links": {
+    "portfolio": "https://sacha.sitecreator.shop",
+    "linkedin": "https://www.linkedin.com/in/sacha-fromont-9820213a8/",
+    "github": "https://github.com/a11q1"
+  },
+  "fallback": {
+    "public_repos": 8,
+    "followers": 13,
+    "following": 20,
+    "stars": 4,
+    "languages": [["Go", 1], ["TypeScript", 1], ["CSS", 1], ["JavaScript", 1], ["Shell", 1]]
+  }
+}

@@ -1,0 +1,18 @@
+services:
+  gitskin:
+    build: .
+    image: gitskin-selfhosted:1.0.0
+    container_name: gitskin
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8792:8792"
+    environment:
+      PORT: "8792"
+      HOST: "0.0.0.0"
+      # Optional: raise the GitHub API rate limit with a read-only token.
+      # GITHUB_TOKEN: "${GITHUB_TOKEN:-}"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8792/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

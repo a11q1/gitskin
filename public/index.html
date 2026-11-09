@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>GitSkin — self-hosted</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050b12;
+      --bg2: #08131d;
+      --panel: #0a1622;
+      --panel2: #0d1c29;
+      --line: #173247;
+      --line2: #0f2536;
+      --text: #dceaf1;
+      --muted: #7e9cab;
+      --dim: #4b6979;
+      --accent: #40e0cf;
+      --accent2: #f0b64a;
+      --accent3: #ff5c8a;
+      --accent4: #a78bfa;
+      --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      --sans: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      background:
+        radial-gradient(80% 50% at 18% 0%, rgba(11, 58, 68, .55), transparent 70%),
+        radial-gradient(70% 50% at 92% 100%, rgba(42, 31, 18, .45), transparent 70%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--line2) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line2) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: .28;
+      mask-image: linear-gradient(180deg, #000, transparent 72%);
+      z-index: 0;
+    }
+    .wrap { position: relative; z-index: 1; width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 64px; }
+    header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .mark { width: 44px; height: 44px; border: 1px solid var(--line); background: var(--panel); display: grid; place-items: center; }
+    .mark svg { width: 26px; height: 26px; }
+    h1 { margin: 0; font-family: var(--sans); font-size: clamp(28px, 4vw, 44px); letter-spacing: 1.5px; line-height: .95; }
+    h1 span { color: var(--accent); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); padding: 6px 10px; font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; }
+    .badge i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: .35 } 50% { opacity: 1 } }
+    .lede { margin: 18px 0 0; max-width: 760px; color: var(--muted); font-size: 13px; }
+    .lede strong { color: var(--text); font-weight: 400; }
+    .controls { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 12px; margin: 24px 0; padding: 16px; border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 88%, transparent); }
+    label { display: grid; gap: 7px; color: var(--dim); font-size: 9px; letter-spacing: 1.8px; text-transform: uppercase; }
+    input, select, button { font-family: var(--mono); font-size: 12px; color: var(--text); background: var(--bg); border: 1px solid var(--line); padding: 10px 12px; outline: none; }
+    input:focus, select:focus, button:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); }
+    button { cursor: pointer; background: var(--panel2); letter-spacing: 1px; text-transform: uppercase; }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    button.primary { background: var(--accent); color: #041411; border-color: var(--accent); font-weight: 700; }
+    button.primary:hover { filter: brightness(1.08); color: #041411; }
+    .preview { display: grid; gap: 16px; }
+    .card { border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 82%, transparent); padding: 12px; }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .card-label { color: var(--dim); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+    .card-label b { color: var(--accent); font-weight: 400; }
+    .card img { display: block; width: 100%; height: auto; border: 1px solid var(--line2); background: var(--bg); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .snippets { margin-top: 28px; display: grid; gap: 12px; }
+    .snippet { border: 1px solid var(--line); background: var(--panel); }
+    .snippet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line2); }
+    .snippet-head span { color: var(--muted); font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; }
+    .snippet pre { margin: 0; padding: 14px; overflow-x: auto; color: var(--accent); font-size: 11px; line-height: 1.6; }
+    .snippet code { white-space: pre; }
+    .copy { padding: 6px 9px; font-size: 9px; }
+    .copy.ok { color: var(--accent); border-color: var(--accent); }
+    footer { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--dim); font-size: 10px; letter-spacing: 1px; }
+    footer a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
+    footer a:hover { color: var(--accent); border-color: var(--accent); }
+    .status { display: inline-flex; align-items: center; gap: 8px; }
+    .status i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    @media (max-width: 820px) {
+      .controls { grid-template-columns: 1fr 1fr; }
+      .controls .wide { grid-column: 1 / -1; }
+      .grid-2 { grid-template-columns: 1fr; }
+      header { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width: min(100% - 20px, 1160px); padding-top: 24px; }
+      .controls { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="mark">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="8" fill="#0a1622"/><path d="M12 20h24v6H18v12h12v-4h-6v-6h12v16H12z" fill="#40e0cf"/><path d="M42 20h10v24H42z" fill="#f0b64a"/></svg>
+        </div>
+        <div>
+          <h1>GIT<span>SKIN</span></h1>
+          <div class="badge"><i></i> self-hosted · zéro dépendance</div>
+        </div>
+      </div>
+      <div class="status"><i></i><span id="health">connexion…</span></div>
+    </header>
+
+    <p class="lede">Des cartes SVG générées depuis l'API GitHub publique, servies depuis mon homelab. <strong>Pas de SaaS, pas de tracker, pas de workflow</strong> : trois URLs à coller dans un README.</p>
+
+    <section class="controls" aria-label="Paramètres">
+      <label class="wide">Utilisateur GitHub
+        <input id="username" value="a11q1" autocomplete="off" spellcheck="false" />
+      </label>
+      <label>Thème
+        <select id="theme">
+          <option value="blueprint">Blueprint</option>
+          <option value="cyber">Cyber</option>
+          <option value="aurora">Aurora</option>
+          <option value="light">Light</option>
+        </select>
+      </label>
+      <label>Mode
+        <select id="mode">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </label>
+      <label>&nbsp;
+        <button class="primary" id="refresh">Générer</button>
+      </label>
+    </section>
+
+    <section class="preview" aria-label="Aperçu">
+      <div class="card">
+        <div class="card-top"><div class="card-label">01 / <b>Hero</b></div><a class="card-label" id="hero-open" href="#" target="_blank" rel="noreferrer">ouvrir le SVG ↗</a></div>
+        <img id="hero" alt="Aperçu de la carte hero" />
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-top"><div class="card-label">02 / <b>Stats</b></div><a class="card-label" id="stats-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
+          <img id="stats" alt="Aperçu de la carte stats" />
+        </div>
+        <div class="card">
+          <div class="card-top"><div class="card-label">03 / <b>Stack</b></div><a class="card-label" id="stack-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
+          <img id="stack" alt="Aperçu de la carte stack" />
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-top"><div class="card-label">04 / <b>Status</b></div><a class="card-label" id="status-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
+        <img id="status" alt="Aperçu de la carte status" />
+      </div>
+    </section>
+
+    <section class="snippets" aria-label="Snippets Markdown">
+      <div class="snippet">
+        <div class="snippet-head"><span>Hero — Markdown</span><button class="copy" data-copy="hero-code">Copier</button></div>
+        <pre><code id="hero-code"></code></pre>
+      </div>
+      <div class="snippet">
+        <div class="snippet-head"><span>Stats + Stack — Markdown</span><button class="copy" data-copy="cards-code">Copier</button></div>
+        <pre><code id="cards-code"></code></pre>
+      </div>
+      <div class="snippet">
+        <div class="snippet-head"><span>Status — Markdown</span><button class="copy" data-copy="status-code">Copier</button></div>
+        <pre><code id="status-code"></code></pre>
+      </div>
+    </section>
+
+    <footer>
+      <span>GITSKIN SELF-HOSTED · CT131 · CLOUDFLARE TUNNEL</span>
+      <span><a href="https://github.com/a11q1/gitskin" target="_blank" rel="noreferrer">source</a> · <a href="/healthz" target="_blank" rel="noreferrer">health</a> · <a href="/api/hero?username=a11q1" target="_blank" rel="noreferrer">api</a></span>
+    </footer>
+  </div>
+
+  <script>
+    const $ = (selector) => document.querySelector(selector);
+    const state = { username: 'a11q1', theme: 'blueprint', mode: 'dark' };
+
+    const params = new URLSearchParams(location.search);
+    for (const key of ['username', 'theme', 'mode']) {
+      if (params.get(key)) state[key] = params.get(key);
+    }
+
+    const inputs = {
+      username: $('#username'),
+      theme: $('#theme'),
+      mode: $('#mode')
+    };
+    inputs.username.value = state.username;
+    inputs.theme.value = state.theme;
+    inputs.mode.value = state.mode;
+
+    const images = {
+      hero: $('#hero'),
+      stats: $('#stats'),
+      stack: $('#stack'),
+      status: $('#status')
+    };
+
+    const url = (kind) => {
+      const query = new URLSearchParams({
+        username: state.username,
+        theme: state.theme,
+        mode: state.mode,
+        t: Date.now().toString()
+      });
+      return `/api/${kind}?${query}`;
+    };
+
+    const snippet = (kind) => {
+      const base = location.origin;
+      const query = `username=${encodeURIComponent(state.username)}&theme=${encodeURIComponent(state.theme)}`;
+      if (kind === 'hero') {
+        return `<p align="center">\n  <img src="${base}/api/hero?${query}" width="100%" alt="Profil GitHub de ${state.username}" />\n</p>`;
+      }
+      if (kind === 'cards') {
+        return `<p align="center">\n  <img src="${base}/api/stats?${query}" width="49%" alt="Statistiques GitHub" />\n  <img src="${base}/api/stack?${query}" width="49%" alt="Stack technique" />\n</p>`;
+      }
+      return `<p align="center">\n  <img src="${base}/api/status?theme=${encodeURIComponent(state.theme)}" width="100%" alt="GitSkin self-hosted status" />\n</p>`;
+    };
+
+    const refresh = () => {
+      for (const [kind, image] of Object.entries(images)) {
+        image.src = url(kind);
+        const open = document.getElementById(`${kind}-open`);
+        if (open) open.href = url(kind);
+      }
+      $('#hero-code').textContent = snippet('hero');
+      $('#cards-code').textContent = snippet('cards');
+      $('#status-code').textContent = snippet('status');
+      const next = new URL(location.href);
+      next.searchParams.set('username', state.username);
+      next.searchParams.set('theme', state.theme);
+      next.searchParams.set('mode', state.mode);
+      history.replaceState(null, '', next);
+    };
+
+    const schedule = (() => {
+      let timer;
+      return () => {
+        clearTimeout(timer);
+        timer = setTimeout(refresh, 250);
+      };
+    })();
+
+    inputs.username.addEventListener('input', () => {
+      state.username = inputs.username.value.trim() || 'a11q1';
+      schedule();
+    });
+    inputs.theme.addEventListener('change', () => {
+      state.theme = inputs.theme.value;
+      if (state.theme === 'light') state.mode = 'light';
+      refresh();
+    });
+    inputs.mode.addEventListener('change', () => {
+      state.mode = inputs.mode.value;
+      refresh();
+    });
+    $('#refresh').addEventListener('click', refresh);
+
+    document.querySelectorAll('.copy').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const code = document.getElementById(button.dataset.copy);
+        try {
+          await navigator.clipboard.writeText(code.textContent);
+          button.textContent = 'Copié';
+          button.classList.add('ok');
+          setTimeout(() => { button.textContent = 'Copier'; button.classList.remove('ok'); }, 1400);
+        } catch {
+          button.textContent = 'Erreur';
+        }
+      });
+    });
+
+    fetch('/healthz').then((response) => response.json()).then((data) => {
+      $('#health').textContent = `live · ${data.uptime}s uptime`;
+    }).catch(() => {
+      $('#health').textContent = 'hors ligne';
+    });
+
+    refresh();
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "gitskin-selfhosted",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted GitHub profile SVG cards — hero, stats and language stack.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "PORT=8792 node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
