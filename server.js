@@ -19,7 +19,7 @@ const path = require('node:path');
 
 const PORT = Number(process.env.PORT || 8792);
 const HOST = process.env.HOST || '127.0.0.1';
-const CACHE_TTL = 10 * 60 * 1000;
+const CACHE_TTL = 30 * 60 * 1000;
 const CONFIG = JSON.parse(fs.readFileSync(path.join(__dirname, 'profile.json'), 'utf8'));
 const INDEX_HTML = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
 
