@@ -8,11 +8,16 @@ Pas de SaaS, pas de workflow, pas de dépendance : un fichier Node.js, trois end
   <img src="https://skin.aq0a11q1.com/api/hero?username=a11q1&theme=blueprint" width="100%" alt="Aperçu de la carte hero" />
 </p>
 
+<p align="center">
+  <img src="https://skin.aq0a11q1.com/api/arch?theme=blueprint" width="100%" alt="Aperçu du schéma d'architecture" />
+</p>
+
 ## Endpoints
 
 | Endpoint | Description |
 |---|---|
 | `/api/hero?username=a11q1&theme=blueprint` | Carte de présentation : nom, rôle, tags, panneau système |
+| `/api/arch?theme=blueprint` | Schéma d'architecture du homelab (Proxmox, pfSense, Tailscale, Cloudflare) |
 | `/api/stats?username=a11q1&theme=blueprint` | Dépôts, étoiles, followers, following |
 | `/api/stack?username=a11q1&theme=blueprint` | Top 5 des langages, calculé sur les octets des dépôts publics |
 | `/api/status?theme=blueprint` | Bandeau de statut du service |

@@ -86,7 +86,7 @@ function nameLines(name) {
 }
 
 function tagWidth(label) {
-  return Math.max(54, label.length * 6.4 + 22);
+  return Math.max(58, label.length * 7.0 + 24);
 }
 
 function tagsMarkup(tags, x, y, theme) {
@@ -94,8 +94,8 @@ function tagsMarkup(tags, x, y, theme) {
   let cx = x;
   for (const tag of tags || []) {
     const w = tagWidth(tag);
-    out += `<rect x="${cx}" y="${y}" width="${w}" height="24" rx="2" fill="${theme.panel2}" stroke="${theme.line}"/>`;
-    out += `<text class="mono" x="${cx + w / 2}" y="${y + 16}" text-anchor="middle" font-size="9" letter-spacing="1.2" fill="${theme.muted}">${esc(tag)}</text>`;
+    out += `<rect x="${cx}" y="${y}" width="${w}" height="26" rx="2" fill="${theme.panel2}" stroke="${theme.line}"/>`;
+    out += `<text class="mono" x="${cx + w / 2}" y="${y + 17}" text-anchor="middle" font-size="10" letter-spacing="1.2" fill="${theme.muted}">${esc(tag)}</text>`;
     cx += w + 8;
   }
   return out;
@@ -132,6 +132,12 @@ function svgDefs(theme, w, h) {
       <stop offset="0%" stop-color="${theme.accent}" stop-opacity="0.85"/>
       <stop offset="100%" stop-color="${theme.accent}" stop-opacity="0"/>
     </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="${theme.muted}"/>
+    </marker>
+    <marker id="arrowAccent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="${theme.accent}"/>
+    </marker>
     <style>
       .mono { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
       .sans { font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif; }
@@ -159,7 +165,7 @@ function svgHero(profile, theme) {
   const line1Y = lines.length > 1 ? 148 : 186;
   const line2Y = 224;
   const roleY = 262;
-  const tagsY = 302;
+  const tagsY = 300;
   const panel = Array.isArray(profile.panel) && profile.panel.length ? profile.panel : CONFIG.panel;
   const accent = palette(theme);
 
@@ -175,9 +181,9 @@ function svgHero(profile, theme) {
     const y = 132 + index * 40;
     const color = accent[index % accent.length];
     panelRows += `<rect x="780" y="${y - 10}" width="4" height="18" fill="${color}"/>`;
-    panelRows += `<text class="mono" x="796" y="${y + 3}" font-size="10" letter-spacing="1.4" fill="${color}">${esc(row.key)}</text>`;
-    panelRows += `<text class="mono" x="842" y="${y + 3}" font-size="10" fill="${theme.text}">${esc(row.value)}</text>`;
-    panelRows += `<text class="mono" x="1132" y="${y + 3}" text-anchor="end" font-size="9" letter-spacing="1" fill="${theme.muted}">${esc(row.status)}</text>`;
+    panelRows += `<text class="mono" x="796" y="${y + 3}" font-size="11" letter-spacing="1.4" fill="${color}">${esc(row.key)}</text>`;
+    panelRows += `<text class="mono" x="842" y="${y + 3}" font-size="11" fill="${theme.text}">${esc(row.value)}</text>`;
+    panelRows += `<text class="mono" x="1132" y="${y + 3}" text-anchor="end" font-size="10" letter-spacing="1" fill="${theme.muted}">${esc(row.status)}</text>`;
     panelRows += `<line x1="780" y1="${y + 18}" x2="1132" y2="${y + 18}" stroke="${theme.line2}" stroke-width="1"/>`;
   });
 
@@ -193,25 +199,25 @@ function svgHero(profile, theme) {
   ${svgDefs(theme, w, h)}
   ${cornerMarks(theme, w, h)}
   <line x1="32" y1="48" x2="1168" y2="48" stroke="${theme.line2}" stroke-width="1"/>
-  <text class="mono" x="42" y="31" font-size="10" letter-spacing="2.2" fill="${theme.muted}">A11Q1 / PROFILE</text>
-  <text class="mono" x="1160" y="31" text-anchor="end" font-size="9" letter-spacing="1.8" fill="${theme.dim}">SELF-HOSTED GITSKIN</text>
+  <text class="mono" x="42" y="31" font-size="11" letter-spacing="2.2" fill="${theme.muted}">A11Q1 / PROFILE</text>
+  <text class="mono" x="1160" y="31" text-anchor="end" font-size="10" letter-spacing="1.8" fill="${theme.dim}">SELF-HOSTED GITSKIN</text>
 
   <rect x="40" y="${lines.length > 1 ? 90 : 128}" width="2" height="${lines.length > 1 ? 138 : 80}" fill="${theme.accent}"/>
   ${nameMarkup}
-  <text class="mono" x="48" y="${roleY}" font-size="12" letter-spacing="2.4" fill="${theme.muted}">${esc(upper(profile.role))}</text>
+  <text class="mono" x="48" y="${roleY}" font-size="14" letter-spacing="2.2" fill="${theme.muted}">${esc(upper(profile.role))}</text>
   ${tagsMarkup(profile.tags, 48, tagsY, theme)}
-  <text class="mono" x="48" y="346" font-size="9" letter-spacing="1.6" fill="${theme.dim}">${esc(upper(profile.location))} · 48.87N 2.23E</text>
-  <text class="mono" x="720" y="346" text-anchor="end" font-size="9" letter-spacing="1.6" fill="${theme.dim}">${esc(upper(profile.status))}</text>
+  <text class="mono" x="48" y="346" font-size="10" letter-spacing="1.6" fill="${theme.dim}">${esc(upper(profile.location))} · 48.87N 2.23E</text>
+  <text class="mono" x="720" y="346" text-anchor="end" font-size="10" letter-spacing="1.6" fill="${theme.dim}">${esc(upper(profile.status))}</text>
 
   <rect x="760" y="64" width="392" height="264" fill="${theme.panel}" stroke="${theme.line}" stroke-width="1"/>
   <rect x="760" y="64" width="392" height="2" fill="${theme.accent2}"/>
-  <text class="mono" x="780" y="92" font-size="11" letter-spacing="2.2" fill="${theme.text}">SYSTEM SCAN</text>
+  <text class="mono" x="780" y="92" font-size="12" letter-spacing="2.2" fill="${theme.text}">SYSTEM SCAN</text>
   <circle class="dot" cx="1108" cy="87" r="3" fill="${theme.accent}"/>
-  <text class="mono" x="1132" y="92" text-anchor="end" font-size="9" letter-spacing="1.6" fill="${theme.accent}">LIVE</text>
+  <text class="mono" x="1132" y="92" text-anchor="end" font-size="10" letter-spacing="1.6" fill="${theme.accent}">LIVE</text>
   <line x1="780" y1="106" x2="1132" y2="106" stroke="${theme.line2}" stroke-width="1"/>
   ${panelRows}
   ${barcode}
-  <text class="mono" x="1132" y="307" text-anchor="end" font-size="8" letter-spacing="1.4" fill="${theme.dim}">1200 × 360 · REV 2026.11</text>
+  <text class="mono" x="1132" y="307" text-anchor="end" font-size="9" letter-spacing="1.4" fill="${theme.dim}">1200 × 360 · REV 2026.11</text>
   <rect x="760" y="64" width="392" height="264" fill="none" stroke="${theme.line}" stroke-width="1"/>
 </svg>`;
 }
@@ -233,8 +239,8 @@ function svgStats(profile, theme) {
   let statMarkup = '';
   stats.forEach(([label, value], index) => {
     const x = 28 + index * 142;
-    statMarkup += `<text class="mono" x="${x}" y="82" font-size="9" letter-spacing="2" fill="${theme.muted}">${label}</text>`;
-    statMarkup += `<text class="sans" x="${x}" y="126" font-size="40" font-weight="900" letter-spacing="0.5" fill="${accent[index % accent.length]}">${fmt(value)}</text>`;
+    statMarkup += `<text class="mono" x="${x}" y="82" font-size="10" letter-spacing="2" fill="${theme.muted}">${label}</text>`;
+    statMarkup += `<text class="sans" x="${x}" y="126" font-size="44" font-weight="900" letter-spacing="0.5" fill="${accent[index % accent.length]}">${fmt(value)}</text>`;
     if (index < 3) statMarkup += `<line x1="${x + 122}" y1="62" x2="${x + 122}" y2="140" stroke="${theme.line2}" stroke-width="1"/>`;
   });
 
@@ -246,7 +252,7 @@ function svgStats(profile, theme) {
   <desc id="desc">Statistiques GitHub publiques : dépôts, étoiles, followers et following.</desc>
   ${svgDefs(theme, w, h)}
   ${cornerMarks(theme, w, h)}
-  <text class="mono" x="28" y="34" font-size="11" letter-spacing="2.2" fill="${theme.text}">PROFILE / SIGNAL</text>
+  <text class="mono" x="28" y="34" font-size="12" letter-spacing="2.2" fill="${theme.text}">PROFILE / SIGNAL</text>
   <circle class="dot" cx="520" cy="29" r="3" fill="${liveColor}"/>
   <text class="mono" x="532" y="33" font-size="9" letter-spacing="1.8" fill="${liveColor}">${live}</text>
   <line x1="28" y1="48" x2="572" y2="48" stroke="${theme.line2}" stroke-width="1"/>
@@ -255,8 +261,8 @@ function svgStats(profile, theme) {
   <circle cx="222" cy="164" r="3" fill="${theme.accent}"/>
   <circle cx="522" cy="170" r="3" fill="${theme.accent2}"/>
   <line x1="28" y1="208" x2="572" y2="208" stroke="${theme.line2}" stroke-width="1"/>
-  <text class="mono" x="28" y="226" font-size="8" letter-spacing="1.2" fill="${theme.dim}">@${esc(profile.user.login)} · GITHUB.COM/${esc(upper(profile.user.login))}</text>
-  <text class="mono" x="572" y="226" text-anchor="end" font-size="8" letter-spacing="1.2" fill="${theme.dim}">UPDATED ${updated}</text>
+  <text class="mono" x="28" y="226" font-size="9" letter-spacing="1.2" fill="${theme.dim}">@${esc(profile.user.login)} · GITHUB.COM/${esc(upper(profile.user.login))}</text>
+  <text class="mono" x="572" y="226" text-anchor="end" font-size="9" letter-spacing="1.2" fill="${theme.dim}">UPDATED ${updated}</text>
 </svg>`;
 }
 
@@ -272,10 +278,10 @@ function svgStack(profile, theme) {
     const y = 78 + index * 26;
     const pct = Math.max(0.02, count / total);
     const color = accent[index % accent.length];
-    rows += `<text class="mono" x="28" y="${y + 8}" font-size="10" letter-spacing="1" fill="${theme.text}">${esc(name)}</text>`;
-    rows += `<rect x="128" y="${y}" width="360" height="8" rx="1" fill="${theme.line2}"/>`;
-    rows += `<rect x="128" y="${y}" width="${Math.round(360 * pct)}" height="8" rx="1" fill="${color}"/>`;
-    rows += `<text class="mono" x="572" y="${y + 8}" text-anchor="end" font-size="9" letter-spacing="1" fill="${theme.muted}">${Math.round(pct * 100)}%</text>`;
+    rows += `<text class="mono" x="28" y="${y + 9}" font-size="11" letter-spacing="1" fill="${theme.text}">${esc(name)}</text>`;
+    rows += `<rect x="128" y="${y}" width="360" height="10" rx="1" fill="${theme.line2}"/>`;
+    rows += `<rect x="128" y="${y}" width="${Math.round(360 * pct)}" height="10" rx="1" fill="${color}"/>`;
+    rows += `<text class="mono" x="572" y="${y + 9}" text-anchor="end" font-size="10" letter-spacing="1" fill="${theme.muted}">${Math.round(pct * 100)}%</text>`;
   });
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -284,13 +290,82 @@ function svgStack(profile, theme) {
   <desc id="desc">Répartition des langages principaux des dépôts publics GitHub.</desc>
   ${svgDefs(theme, w, h)}
   ${cornerMarks(theme, w, h)}
-  <text class="mono" x="28" y="34" font-size="11" letter-spacing="2.2" fill="${theme.text}">STACK / LANGUAGES</text>
-  <text class="mono" x="572" y="33" text-anchor="end" font-size="8" letter-spacing="1.3" fill="${theme.dim}">FROM PUBLIC REPOS</text>
+  <text class="mono" x="28" y="34" font-size="12" letter-spacing="2.2" fill="${theme.text}">STACK / LANGUAGES</text>
+  <text class="mono" x="572" y="33" text-anchor="end" font-size="9" letter-spacing="1.3" fill="${theme.dim}">FROM PUBLIC REPOS</text>
   <line x1="28" y1="48" x2="572" y2="48" stroke="${theme.line2}" stroke-width="1"/>
   ${rows}
   <line x1="28" y1="208" x2="572" y2="208" stroke="${theme.line2}" stroke-width="1"/>
-  <text class="mono" x="28" y="226" font-size="8" letter-spacing="1.2" fill="${theme.dim}">TOP ${languages.length} · ${fmt(profile.user.public_repos)} REPOS</text>
-  <text class="mono" x="572" y="226" text-anchor="end" font-size="8" letter-spacing="1.2" fill="${theme.dim}">@${esc(profile.user.login)}</text>
+  <text class="mono" x="28" y="226" font-size="9" letter-spacing="1.2" fill="${theme.dim}">TOP ${languages.length} · ${fmt(profile.user.public_repos)} REPOS</text>
+  <text class="mono" x="572" y="226" text-anchor="end" font-size="9" letter-spacing="1.2" fill="${theme.dim}">@${esc(profile.user.login)}</text>
+</svg>`;
+}
+
+function svgArch(theme) {
+  const w = 1200;
+  const h = 440;
+  const box = (x, y, bw, bh, title, lines, color, fill = theme.panel2) => {
+    let out = `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="2" fill="${fill}" stroke="${theme.line}" stroke-width="1"/>`;
+    out += `<text class="mono" x="${x + 14}" y="${y + 22}" font-size="10" letter-spacing="1.2" fill="${color}">${esc(title)}</text>`;
+    (lines || []).forEach((line, index) => {
+      out += `<text class="mono" x="${x + 14}" y="${y + 40 + index * 13}" font-size="8" letter-spacing="0.8" fill="${theme.muted}">${esc(line)}</text>`;
+    });
+    return out;
+  };
+  const label = (x, y, value, color = theme.dim) =>
+    `<text class="mono" x="${x}" y="${y}" font-size="8" letter-spacing="1.2" fill="${color}">${esc(value)}</text>`;
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="title desc">
+  <title id="title">Homelab topology — Proxmox, pfSense, Tailscale, Cloudflare</title>
+  <desc id="desc">Schéma simplifié du homelab : Internet, Cloudflare, reverse proxy, Proxmox VE et services internes.</desc>
+  ${svgDefs(theme, w, h)}
+  ${cornerMarks(theme, w, h)}
+  <text class="mono" x="40" y="38" font-size="12" letter-spacing="2.2" fill="${theme.text}">HOMELAB / TOPOLOGY</text>
+  <text class="mono" x="1160" y="38" text-anchor="end" font-size="9" letter-spacing="1.4" fill="${theme.dim}">PROXMOX VE 9.x · ~30 LXC/VM</text>
+  <line x1="40" y1="54" x2="1160" y2="54" stroke="${theme.line2}" stroke-width="1"/>
+
+  <rect x="40" y="158" width="130" height="64" rx="32" fill="${theme.panel}" stroke="${theme.line}" stroke-width="1"/>
+  <text class="mono" x="105" y="186" text-anchor="middle" font-size="11" letter-spacing="1.6" fill="${theme.accent}">INTERNET</text>
+  <text class="mono" x="105" y="202" text-anchor="middle" font-size="8" letter-spacing="1" fill="${theme.dim}">WAN</text>
+
+  ${box(220, 140, 190, 100, 'CLOUDFLARE', ['DNS · TUNNELS', 'ACCESS · WAF'], theme.accent2)}
+  ${box(460, 160, 150, 60, 'REVERSE PROXY', ['nginx · TLS'], theme.accent)}
+
+  <rect x="660" y="70" width="500" height="310" fill="${theme.panel}" stroke="${theme.line}" stroke-width="1"/>
+  <rect x="660" y="70" width="500" height="2" fill="${theme.accent}"/>
+  <text class="mono" x="680" y="96" font-size="11" letter-spacing="1.8" fill="${theme.accent}">PROXMOX VE · DELL R630</text>
+  <text class="mono" x="680" y="112" font-size="8" letter-spacing="1.2" fill="${theme.dim}">2× XEON E5-2640 V4 · 256 GB ECC</text>
+
+  ${box(690, 130, 190, 66, 'WEB / API / BOTS', ['LXC · systemd'], theme.accent)}
+  ${box(930, 130, 200, 66, 'SQLITE / POSTGRESQL', ['données applicatives'], theme.accent2)}
+  ${box(690, 230, 190, 66, 'PROMETHEUS / GRAFANA', ['LOKI · ALERTMANAGER'], theme.accent3)}
+  ${box(930, 230, 200, 66, 'LAB CYBER', ['AD · KALI · HONEYPOTS'], theme.accent4)}
+  ${box(690, 320, 190, 40, 'BACKUPS · SNAPSHOTS', [], theme.accent5)}
+  ${box(930, 320, 200, 40, 'PFSENSE · VLAN · DMZ', [], theme.accent3)}
+  ${box(220, 300, 190, 70, 'TAILSCALE', ['MESH WIREGUARD', 'ADMIN ONLY'], theme.accent4)}
+
+  <line x1="170" y1="190" x2="216" y2="190" stroke="${theme.muted}" stroke-width="1.2" marker-end="url(#arrow)"/>
+  ${label(176, 181, 'WAN')}
+  <line x1="410" y1="190" x2="456" y2="190" stroke="${theme.muted}" stroke-width="1.2" marker-end="url(#arrow)"/>
+  ${label(422, 181, 'HTTPS')}
+  <line x1="610" y1="190" x2="686" y2="166" stroke="${theme.muted}" stroke-width="1.2" marker-end="url(#arrow)"/>
+  ${label(622, 181, 'ROUTE')}
+  <line x1="880" y1="163" x2="926" y2="163" stroke="${theme.muted}" stroke-width="1.2" marker-end="url(#arrow)"/>
+  ${label(892, 154, 'SQL')}
+  <line x1="785" y1="230" x2="785" y2="200" stroke="${theme.accent4}" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+  ${label(795, 220, 'OBSERVE', theme.accent4)}
+  <line x1="410" y1="335" x2="656" y2="335" stroke="${theme.accent4}" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+  ${label(490, 326, 'ADMIN ONLY', theme.accent4)}
+  <line x1="1030" y1="296" x2="1030" y2="316" stroke="${theme.muted}" stroke-width="1.2" marker-end="url(#arrow)"/>
+  ${label(1040, 312, 'VLAN')}
+
+  <line x1="40" y1="408" x2="72" y2="408" stroke="${theme.accent}" stroke-width="2"/>
+  ${label(80, 412, 'FLUX PUBLIC', theme.muted)}
+  <line x1="210" y1="408" x2="242" y2="408" stroke="${theme.accent4}" stroke-width="2" stroke-dasharray="4 4"/>
+  ${label(250, 412, 'ADMIN / OBSERVABILITÉ', theme.muted)}
+  <rect x="470" y="402" width="12" height="12" fill="${theme.panel2}" stroke="${theme.line}"/>
+  ${label(490, 412, 'LXC / VM', theme.muted)}
+  <text class="mono" x="1160" y="412" text-anchor="end" font-size="8" letter-spacing="1.2" fill="${theme.dim}">GS-02 · TOPOLOGY · REV 2026.11</text>
 </svg>`;
 }
 
@@ -305,10 +380,10 @@ function svgStatus(theme) {
   ${svgDefs(theme, w, h)}
   <rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" fill="none" stroke="${theme.line}" stroke-width="1"/>
   <circle class="dot" cx="32" cy="32" r="4" fill="${theme.accent}"/>
-  <text class="mono" x="48" y="36" font-size="10" letter-spacing="2" fill="${theme.accent}">SYSTEM ONLINE</text>
+  <text class="mono" x="48" y="36" font-size="11" letter-spacing="2" fill="${theme.accent}">SYSTEM ONLINE</text>
   <line x1="196" y1="20" x2="196" y2="44" stroke="${theme.line2}" stroke-width="1"/>
-  <text class="mono" x="216" y="36" font-size="9" letter-spacing="1.4" fill="${theme.muted}">SELF-HOSTED · CT131 · CLOUDFLARE TUNNEL</text>
-  <text class="mono" x="1168" y="36" text-anchor="end" font-size="9" letter-spacing="1.4" fill="${theme.dim}">UPDATED ${now}</text>
+  <text class="mono" x="216" y="36" font-size="10" letter-spacing="1.4" fill="${theme.muted}">SELF-HOSTED · CT131 · CLOUDFLARE TUNNEL</text>
+  <text class="mono" x="1168" y="36" text-anchor="end" font-size="10" letter-spacing="1.4" fill="${theme.dim}">UPDATED ${now}</text>
 </svg>`;
 }
 
@@ -463,6 +538,10 @@ const server = http.createServer(async (req, res) => {
 
   if (url.pathname === '/api/stack') {
     return send(res, 200, 'image/svg+xml; charset=utf-8', svgStack(await getProfile(username), theme));
+  }
+
+  if (url.pathname === '/api/arch') {
+    return send(res, 200, 'image/svg+xml; charset=utf-8', svgArch(theme));
   }
 
   if (url.pathname === '/api/status') {

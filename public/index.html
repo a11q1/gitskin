@@ -147,18 +147,22 @@
         <div class="card-top"><div class="card-label">01 / <b>Hero</b></div><a class="card-label" id="hero-open" href="#" target="_blank" rel="noreferrer">ouvrir le SVG ↗</a></div>
         <img id="hero" alt="Aperçu de la carte hero" />
       </div>
+      <div class="card">
+        <div class="card-top"><div class="card-label">02 / <b>Topology</b></div><a class="card-label" id="arch-open" href="#" target="_blank" rel="noreferrer">ouvrir le SVG ↗</a></div>
+        <img id="arch" alt="Aperçu du schéma d'architecture" />
+      </div>
       <div class="grid-2">
         <div class="card">
-          <div class="card-top"><div class="card-label">02 / <b>Stats</b></div><a class="card-label" id="stats-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
+          <div class="card-top"><div class="card-label">03 / <b>Stats</b></div><a class="card-label" id="stats-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
           <img id="stats" alt="Aperçu de la carte stats" />
         </div>
         <div class="card">
-          <div class="card-top"><div class="card-label">03 / <b>Stack</b></div><a class="card-label" id="stack-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
+          <div class="card-top"><div class="card-label">04 / <b>Stack</b></div><a class="card-label" id="stack-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
           <img id="stack" alt="Aperçu de la carte stack" />
         </div>
       </div>
       <div class="card">
-        <div class="card-top"><div class="card-label">04 / <b>Status</b></div><a class="card-label" id="status-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
+        <div class="card-top"><div class="card-label">05 / <b>Status</b></div><a class="card-label" id="status-open" href="#" target="_blank" rel="noreferrer">ouvrir ↗</a></div>
         <img id="status" alt="Aperçu de la carte status" />
       </div>
     </section>
@@ -167,6 +171,10 @@
       <div class="snippet">
         <div class="snippet-head"><span>Hero — Markdown</span><button class="copy" data-copy="hero-code">Copier</button></div>
         <pre><code id="hero-code"></code></pre>
+      </div>
+      <div class="snippet">
+        <div class="snippet-head"><span>Topology — Markdown</span><button class="copy" data-copy="arch-code">Copier</button></div>
+        <pre><code id="arch-code"></code></pre>
       </div>
       <div class="snippet">
         <div class="snippet-head"><span>Stats + Stack — Markdown</span><button class="copy" data-copy="cards-code">Copier</button></div>
@@ -204,6 +212,7 @@
 
     const images = {
       hero: $('#hero'),
+      arch: $('#arch'),
       stats: $('#stats'),
       stack: $('#stack'),
       status: $('#status')
@@ -225,8 +234,11 @@
       if (kind === 'hero') {
         return `<p align="center">\n  <img src="${base}/api/hero?${query}" width="100%" alt="Profil GitHub de ${state.username}" />\n</p>`;
       }
+      if (kind === 'arch') {
+        return `<p align="center">\n  <img src="${base}/api/arch?theme=${encodeURIComponent(state.theme)}" width="100%" alt="Architecture du homelab" />\n</p>`;
+      }
       if (kind === 'cards') {
-        return `<p align="center">\n  <img src="${base}/api/stats?${query}" width="49%" alt="Statistiques GitHub" />\n  <img src="${base}/api/stack?${query}" width="49%" alt="Stack technique" />\n</p>`;
+        return `<p align="center">\n  <img src="${base}/api/stats?${query}" width="86%" alt="Statistiques GitHub" />\n  <br />\n  <img src="${base}/api/stack?${query}" width="86%" alt="Stack technique" />\n</p>`;
       }
       return `<p align="center">\n  <img src="${base}/api/status?theme=${encodeURIComponent(state.theme)}" width="100%" alt="GitSkin self-hosted status" />\n</p>`;
     };
@@ -238,6 +250,7 @@
         if (open) open.href = url(kind);
       }
       $('#hero-code').textContent = snippet('hero');
+      $('#arch-code').textContent = snippet('arch');
       $('#cards-code').textContent = snippet('cards');
       $('#status-code').textContent = snippet('status');
       const next = new URL(location.href);
